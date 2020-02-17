@@ -72,7 +72,6 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-        //get: delete all tasks
         get("/animals/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             animalDao.clearAllAnimals();
