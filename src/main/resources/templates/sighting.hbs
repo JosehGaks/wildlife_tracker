@@ -1,0 +1,15 @@
+{{#partial "content"}}
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            {{#each sightings}}
+                <div class="card-body">
+                    <h5 class="card-title">Name::{{ location }}</h5>
+                    <p class="card-text">age : {{ rangerName }} </p>
+                    <a href="#" class="btn btn-primary">more details</a>
+                </div>
+            {{/each}}
+        </div>
+
+    </div>
+{{/partial}}
+{{> layout.hbs}}
