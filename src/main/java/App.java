@@ -21,7 +21,6 @@ public class App {
         Sql2oAnimalDao animalDao = new Sql2oAnimalDao(sql2o);
         Sql2oSightingDao sightingDao = new Sql2oSightingDao(sql2o);
 
-        //get: show all tasks in all categories and show all categories
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Sightings> allSightings = sightingDao.getAll();
