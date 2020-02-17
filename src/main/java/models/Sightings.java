@@ -36,6 +36,7 @@ public class Sightings {
         this.location = location;
     }
 
+    //equals
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,7 +46,6 @@ public class Sightings {
                 Objects.equals(rangerName, sightings.rangerName) &&
                 Objects.equals(location, sightings.location);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(rangerName, id, location);
