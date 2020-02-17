@@ -49,7 +49,7 @@ public class Sql2oSightingDao implements SightingsDao{
 
     @Override
     public void update(int id, String newRangerName,String newLocation){
-        String sql = "UPDATE sightings SET name = :name WHERE id=:id";
+        String sql = "UPDATE sightings SET rangerName = :rangerName ,location = :location WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("rangerName", newRangerName)

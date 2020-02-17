@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class Sql2oAnimalDaoTest {
     private Sql2oAnimalDao animalDao; //ignore me for now. We'll create this soon.
@@ -56,13 +58,13 @@ public class Sql2oAnimalDaoTest {
 
     @Test
     public void updateChangesAnimalContent() throws Exception {
-        String initialDescription = "mow the lawn";
+        String initialName = "lion";
         Animal animal = setupNewAnimal();
         animalDao.add(animal);
 
         animalDao.update(animal.getId(),"crocodile", 1,true,"ill");
         Animal updatedAnimal = animalDao.findById(animal.getId()); //why do I need to refind this?
-        assertNotEquals(initialDescription, updatedAnimal.get());
+        assertNotEquals(initialName, updatedAnimal.getName());
     }
 
     @Test

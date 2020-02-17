@@ -48,7 +48,7 @@ public class Sql2oAnimalDao implements AnimalDao{
 
     @Override
     public void update(int id, String newName,int newAge,boolean newEndangered,String newHealth){
-        String sql = "UPDATE tasks SET (description, categoryId) = (:description, :categoryId) WHERE id=:id";   //raw sql
+        String sql = "UPDATE animals SET (name,age,endangered,health) = (:name,:age,:endangered,:health) WHERE id=:id";   //raw sql
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("name", newName)
