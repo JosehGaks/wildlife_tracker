@@ -36,7 +36,6 @@ public class App {
             return new ModelAndView(model, "sightings-form.hbs"); //new layout
         }, new HandlebarsTemplateEngine());
 
-        //post: process a form to create a new category
         post("/sightings", (request, response) -> { //new
             Map<String, Object> model = new HashMap<>();
             String location = request.queryParams("location");
