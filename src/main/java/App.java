@@ -79,7 +79,7 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-        //get a specific category (and the tasks it contains)
+
         get("/sightings/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfSightingToFind = Integer.parseInt(req.params("id")); //new
@@ -91,7 +91,7 @@ public class App {
             return new ModelAndView(model, "sighting.hbs"); //new
         }, new HandlebarsTemplateEngine());
 
-        //get: show a form to update a category
+
         get("/sightings/:id/edit", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("editSighting", true);
