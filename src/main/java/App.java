@@ -64,7 +64,6 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-        //get: delete all categories and all tasks
         get("/sightings/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             sightingDao.clearAllSightings();
