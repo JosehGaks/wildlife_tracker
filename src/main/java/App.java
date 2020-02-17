@@ -101,7 +101,7 @@ public class App {
             return new ModelAndView(model, "category-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //post: process a form to update a category
+
         post("/sightings/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfSightingToEdit = Integer.parseInt(req.params("id"));
