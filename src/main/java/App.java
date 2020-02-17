@@ -54,7 +54,7 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         //task: process new task form
-        post("/animals", (request, response) -> { //URL to make new animal on POST route
+        post("/animals", (request, response) -> {
             //Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("name");
             boolean endangered =Boolean.parseBoolean(request.queryParams("endangered"));
