@@ -148,7 +148,7 @@ public class App {
             return new ModelAndView(model, "task-form.hbs");
         }, new HandlebarsTemplateEngine());
 */
-        //task: process a form to update a task
+
         post("/animals/:id", (request, response) -> { //URL to update task on POST route
             Map<String, Object> model = new HashMap<>();
             int animalToEditId = Integer.parseInt(request.params("id"));
