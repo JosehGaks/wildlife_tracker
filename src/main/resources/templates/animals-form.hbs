@@ -1,15 +1,16 @@
 {{#partial "content"}}
 
 
-    <form class="text-center border border-light p-5" action="/animals" method ="post">
+    <form  action="/animals" method ="post">
 
         <input type="text" id="name" class="form-control mb-4" placeholder="Name">
+        <input type="number" id="age" class="form-control" placeholder="Enter age">
         <div class="custom-control custom-checkbox mb-4">
             <input type="checkbox" class="custom-control-input" id="endangered">
             <label class="custom-control-label" for="endangered">endangered</label>
         </div>
         <input type="text" id="health" class="form-control mb-4" placeholder="Enter the health of the animal">
-        <input type="number" id="age" class="form-control" placeholder="Enter age">
+
         <button class="btn btn-info btn-block" type="submit"> add </button>
 
     </form>

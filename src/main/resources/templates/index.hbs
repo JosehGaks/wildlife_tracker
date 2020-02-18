@@ -1,35 +1,41 @@
 {{#partial "content"}}
+
     <div class="container">
-        <div class="card" style="width: 18rem;">
+        <div class="row">
+            <div class="col">
+            <h2>Animals</h2>
+            <div class="card" style="width: 18rem;">
             {{#if animals}}
            {{#each animals}}
           <div class="card-body">
             <h5 class="card-title">Name::{{ name }}</h5>
             <p class="card-text">age : {{ age }}  health : {{ health }} </p>
-            <a href="#" class="btn btn-primary">more details</a>
+            <a href="/animals/{{id}}" class="btn btn-primary">see</a>
           </div>
            {{/each}}
             {{else}}
                 <p>no animals</p>
            {{/if}}
         </div>
-
-    </div>
-
-    <div class="container">
-        <div class="card" style="width: 18rem;">
+            </div>
+            <hr>
+            <div class="col">
+            <h2>Sightings</h2>
+            <div class="card" style="width: 18rem;">
             {{#if sightings}}
                 {{#each sightings}}
                     <div class="card-body">
-                        <p class="card-text">Ranger name : {{ rangerName }}</p>
-                        <h5 class="card-title">sightings location : {{ location }}</h5>
+                        <p class="card-text">Ranger name : {{rangerName}}</p>
+                        <h5 class="card-title">sightings location : {{location}}</h5>
 
-                        <a href="#" class="btn btn-primary">more details</a>
+                        <a href="/sightings/{{id}}" class="btn btn-primary">see</a>
                     </div>
                 {{/each}}
             {{else}}
                 <p>no sightings</p>
             {{/if}}
+        </div>
+            </div>
         </div>
     </div>
 {{/partial}}

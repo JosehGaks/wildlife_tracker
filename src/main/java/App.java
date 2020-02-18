@@ -14,7 +14,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class App {
-    public static void main (String[] args) throws Exception{
+    public static void main (String[] args){
         staticFileLocation("/public");
         String connectionString = "jdbc:h2:~/todolist.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
@@ -51,23 +51,32 @@ public class App {
             return new ModelAndView(model, "animals-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //task: process new task form
+        get("/animals",(request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Animal> animals = animalDao.getAll();
+            model.put("animals", animals);
+            return new ModelAndView(model,"animals.hbs");
+        },new HandlebarsTemplateEngine());
+
+
         post("/animals", (request, response) -> {
-            //Map<String, Object> model = new HashMap<>();
+            Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("name");
+            int age = Integer.parseInt(request.queryParams("age"));
             boolean endangered =Boolean.parseBoolean(request.queryParams("endangered"));
             String health = request.queryParams("health");
-            int age = Integer.parseInt(request.queryParams("age"));
             Animal newAnimal = new Animal(name,age,endangered,health);        //See what we did with the hard coded categoryId?
             animalDao.add(newAnimal);
-            response.redirect("/");
-            return null;
+
+            List<Animal> animals = animalDao.getAll(); //refresh list of links for navbar.
+            model.put("animals", animals);
+
+            return new ModelAndView(model,"index.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/sightings/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             sightingDao.clearAllSightings();
-            //taskDao.clearAllTasks();
             res.redirect("/");
             return null;
         }, new HandlebarsTemplateEngine());
@@ -98,7 +107,7 @@ public class App {
             Sightings sighting = sightingDao.findById(Integer.parseInt(req.params("id")));
             model.put("sighting", sighting);
             model.put("sightings", sightingDao.getAll()); //refresh list of links for navbar
-            return new ModelAndView(model, "category-form.hbs");
+            return new ModelAndView(model, "sightings-form.hbs");
         }, new HandlebarsTemplateEngine());
 
 
@@ -112,51 +121,46 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-        //get: delete an individual task
-       /* get("/categories/:category_id/tasks/:task_id/delete", (req, res) -> {
+        //get: delete an individual animal
+       get("/animals/:animal_id/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            int idOfTaskToDelete = Integer.parseInt(req.params("task_id"));
-            taskDao.deleteById(idOfTaskToDelete);
+            int idOfAnimalToDelete = Integer.parseInt(req.params("animal_id"));
+            animalDao.deleteById(idOfAnimalToDelete);
             res.redirect("/");
             return null;
-        }, new HandlebarsTemplateEngine());*/
-
-        //get: show new task form
-
-
-        //get: show an individual task that is nested in a category
-       /* get("/categories/:category_id/tasks/:task_id", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            int idOfTaskToFind = Integer.parseInt(req.params("task_id")); //pull id - must match route segment
-            Task foundTask = taskDao.findById(idOfTaskToFind); //use it to find task
-            int idOfCategoryToFind = Integer.parseInt(req.params("category_id"));
-            Category foundCategory = categoryDao.findById(idOfCategoryToFind);
-            model.put("category", foundCategory);
-            model.put("task", foundTask); //add it to model for template to display
-            model.put("categories", categoryDao.getAll()); //refresh list of links for navbar
-            return new ModelAndView(model, "task-detail.hbs"); //individual task page.
         }, new HandlebarsTemplateEngine());
-*/
-        //get: show a form to update a task
-        /*get("/animals/:id/edit", (req, res) -> {
+
+
+
+
+
+     get("/animals/:animal_id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<Category> allCategories = categoryDao.getAll();
-            model.put("categories", allCategories);
-            Task task = taskDao.findById(Integer.parseInt(req.params("id")));
-            model.put("task", task);
+            Integer idOfAnimalToFind = Integer.parseInt(req.params("animal_id")); //pull id - must match route segment
+            Animal foundAnimal = animalDao.findById(idOfAnimalToFind); //use it to find task
+
+            model.put("animal", foundAnimal); //add it to model for template to display
+
+            return new ModelAndView(model, "animals.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+        get("/animals/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Animal animal = animalDao.findById(Integer.parseInt(req.params("id")));
+            model.put("animal", animal);
             model.put("editTask", true);
-            return new ModelAndView(model, "task-form.hbs");
+            return new ModelAndView(model, "animal-form.hbs");
         }, new HandlebarsTemplateEngine());
-*/
 
-        post("/animals/:id", (request, response) -> { //URL to update task on POST route
+        post("/animals/:id", (request, response) -> { //URL to update animal on POST route
             Map<String, Object> model = new HashMap<>();
             int animalToEditId = Integer.parseInt(request.params("id"));
             String newName = request.queryParams("name");
             int newAge = Integer.parseInt(request.queryParams("age"));
             Boolean newEndangered =Boolean.parseBoolean(request.queryParams("endangered"));
             String newHealth = request.queryParams("health");
-            animalDao.update(animalToEditId,newName,newAge,newEndangered,newHealth);  // remember the hardcoded categoryId we placed? See what we've done to/with it?
+            animalDao.update(animalToEditId,newName,newAge,newEndangered,newHealth);
             response.redirect("/");
             return null;
         }, new HandlebarsTemplateEngine());

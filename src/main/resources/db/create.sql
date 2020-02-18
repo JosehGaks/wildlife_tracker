@@ -7,9 +7,11 @@ CREATE TABLE IF NOT EXISTS animals (
   endangered BOOLEAN,
   health VARCHAR
 );
+INSERT INTO animals (name,age,endangered,health) VALUES ('elephant',50,'true','ill');
 
 CREATE TABLE IF NOT EXISTS sightings (
   id int PRIMARY KEY auto_increment,
   rangerName VARCHAR,
   location VARCHAR
 );
+INSERT INTO sightings (rangerName,location) VALUES ('Joe','NewYork');

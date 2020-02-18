@@ -12,20 +12,20 @@ public class Sql2oAnimalDao implements AnimalDao{
     private final Sql2o sql2o;
 
     public Sql2oAnimalDao(Sql2o sql2o){
-        this.sql2o = sql2o; //making the sql2o object available everywhere so we can call methods in it
+        this.sql2o = sql2o;
     }
 
     @Override
     public void add(Animal animal) {
         String sql = "INSERT INTO animals (name,age,endangered,health) VALUES (:name,:age,:endangered, :health)"; //raw sql
-        try(Connection con = sql2o.open()){ //try to open a connection
-            int id = (int) con.createQuery(sql, true) //make a new variable
+        try(Connection con = sql2o.open()){
+            int id = (int) con.createQuery(sql, true)
                     .bind(animal)
-                    .executeUpdate() //run it all
-                    .getKey(); //int id is now the row number (row “key”) of db
-            animal.setId(id); //update object to set id now from database
+                    .executeUpdate()
+                    .getKey();
+            animal.setId(id);
         } catch (Sql2oException ex) {
-            System.out.println(ex); //oops we have an error!
+            System.out.println(ex);
         }
     }
 
@@ -41,7 +41,7 @@ public class Sql2oAnimalDao implements AnimalDao{
     public Animal findById(int id) {
         try(Connection con = sql2o.open()){
             return con.createQuery("SELECT * FROM animals WHERE id = :id")
-                    .addParameter("id", id) //key/value pair, key must match above
+                    .addParameter("id", id)
                     .executeAndFetchFirst(Animal.class); //fetch an individual item
         }
     }

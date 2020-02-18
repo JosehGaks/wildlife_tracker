@@ -13,6 +13,7 @@ public class Sql2oSightingDao implements SightingsDao{
     private final Sql2o sql2o;
 
     public Sql2oSightingDao(Sql2o sql2o){
+
         this.sql2o = sql2o;
     }
 
@@ -31,7 +32,7 @@ public class Sql2oSightingDao implements SightingsDao{
     }
 
     @Override
-    public List<Sightings> getAll() {
+    public List<Sightings>getAll() {
         try(Connection con = sql2o.open()){
             return con.createQuery("SELECT * FROM sightings")
                     .executeAndFetch(Sightings.class);
@@ -84,12 +85,5 @@ public class Sql2oSightingDao implements SightingsDao{
         }
     }
 
-   /* @Override
-    public List<Animal> getAllTasksByCategory(int categoryId) {
-        try(Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM animals WHERE sightingsId = :categoryId")
-                    .addParameter("categoryId", categoryId)
-                    .executeAndFetch(Animal.class);
-        }
-    }*/
+
 }
